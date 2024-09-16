@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { BarChart } from "@/components/BarChart";
+import { read } from "fs";
+import Script from "next/script";
+import React from "react";
 
 const chartdata = [
   {
@@ -65,17 +69,58 @@ const chartdata = [
   },
 ];
 
-export const BarChartAxisLabelsExample = () => (
-  <BarChart
-    className="h-80"
-    data={chartdata}
-    index="date"
-    categories={["SolarPanels", "Inverters"]}
-    valueFormatter={(number: number) =>
-      `$${Intl.NumberFormat("us").format(number).toString()}`
+export const BarChartAxisLabelsExample = () => {
+  const [didWait, setDidWait] = React.useState(false);
+
+  React.useEffect(() => {
+    const finished = function () {
+      // It's been 5 seconds, let's return true and make the PDF!
+      return didWait;
+    };
+    if (!didWait) {
+      setTimeout(() => {
+        setDidWait(true);
+      }, 5000);
     }
-    onValueChange={(v) => console.log(v)}
-    xAxisLabel="Month"
-    yAxisLabel="Spend Category"
-  />
-);
+    (window as any).finished = finished;
+
+    // Cleanup function to remove the exposed function when the component unmounts
+    return () => {
+      delete (window as any).finished;
+    };
+  }, [didWait]);
+  return (
+    <>
+      {didWait ? <div>Finished</div> : <div>Loading...</div>}
+      <Script
+        id="jank"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+           console.log('hello from script');
+           var docraptorJavaScriptFinished = function () {
+             if (window.finished) {
+               return window.finished();
+             }
+               else {
+               return false;
+             }
+           };
+          `,
+        }}
+      />
+      <BarChart
+        className="h-80"
+        data={chartdata}
+        index="date"
+        categories={["SolarPanels", "Inverters"]}
+        valueFormatter={(number: number) =>
+          `$${Intl.NumberFormat("us").format(number).toString()}`
+        }
+        onValueChange={(v) => console.log(v)}
+        xAxisLabel="Month"
+        yAxisLabel="Spend Category"
+      />
+    </>
+  );
+};
