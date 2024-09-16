@@ -31,16 +31,29 @@ export default function RootLayout({
           // strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-          console.log('hello from script');
-          var docraptorJavaScriptFinished = function () {
+          // console.log('hello from script');
+          // var docraptorJavaScriptFinished = function () {
               
-              if (window.finished) {
-                return window.finished();
-                }
-                else {
-                  return false;
-              }
-              };
+          //     if (window.finished) {
+          //       return window.finished();
+          //       }
+          //       else {
+          //         return false;
+          //     }
+          //     };
+
+          var didWait = false;
+// DocRaptor polls docraptorJavaScriptFinished until it is true
+docraptorJavaScriptFinished = function() {
+  if (! didWait) {
+    setTimeout(function(){
+      didWait = true;
+    }, 5000);
+    return false;
+  }
+  // It's been 5 seconds, let's return true and make the PDF!
+  return true;
+}
               `,
           }}
         />
