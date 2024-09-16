@@ -14,6 +14,14 @@ export default function page(props: { params: { id: string } }) {
           __html: `
            console.log('hello from script');
            var docraptorJavaScriptFinished = function () {
+            // add a button to the page
+             var button = document.createElement('button');
+             button.textContent = 'Click me';
+             button.onclick = function () {
+               console.log('button clicked');
+             };
+             document.body.appendChild(button);
+
              if (window.finished) {
                return window.finished();
              }
@@ -24,7 +32,7 @@ export default function page(props: { params: { id: string } }) {
           `,
         }}
       />
-      <BarChartAxisLabelsExample />;
+      <BarChartAxisLabelsExample />
     </>
   );
 }
