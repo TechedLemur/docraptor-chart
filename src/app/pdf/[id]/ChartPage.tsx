@@ -2,7 +2,6 @@
 "use client";
 
 import { BarChart } from "@/components/BarChart";
-import { read } from "fs";
 import Script from "next/script";
 import React from "react";
 
