@@ -1,8 +1,16 @@
+"use client";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { BarChartAxisLabelsExample } from "./ChartPage";
-// import Script from "next/script";
+import dynamic from "next/dynamic";
 
-export default function page(props: { params: { id: string } }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const BarChartAxisLabelsExample = dynamic(
+  () => import("./ChartPage"),
+
+  { ssr: false }
+);
+
+export default function Page(props: { params: { id: string } }) {
   const { id } = props.params;
   console.log(id);
   return (

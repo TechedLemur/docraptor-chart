@@ -67,7 +67,7 @@ const chartdata = [
   },
 ];
 
-export const BarChartAxisLabelsExample = () => {
+const BarChartAxisLabelsExample = () => {
   const [didWait, setDidWait] = React.useState(false);
 
   React.useEffect(() => {
@@ -106,3 +106,5 @@ export const BarChartAxisLabelsExample = () => {
     </>
   );
 };
+
+export default BarChartAxisLabelsExample;
