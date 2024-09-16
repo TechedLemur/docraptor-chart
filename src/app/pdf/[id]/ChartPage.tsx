@@ -78,7 +78,7 @@ const BarChartAxisLabelsExample = () => {
     if (!didWait) {
       setTimeout(() => {
         setDidWait(true);
-      }, 5000);
+      }, 2000);
     }
     (window as any).finished = finished;
 
