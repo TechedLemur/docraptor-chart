@@ -9,7 +9,7 @@ export default function page(props: { params: { id: string } }) {
     <>
       <Script
         id="jank"
-        // strategy="beforeInteractive"
+        strategy="beforeInteractive"
         dangerouslySetInnerHTML={{
           __html: `
            console.log('hello from script');
