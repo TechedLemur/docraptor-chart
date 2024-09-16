@@ -2,7 +2,6 @@
 "use client";
 
 import { BarChart } from "@/components/BarChart";
-import Script from "next/script";
 import React from "react";
 
 const chartdata = [
@@ -91,23 +90,7 @@ export const BarChartAxisLabelsExample = () => {
   return (
     <>
       {didWait ? <div>Finished</div> : <div>Loading...</div>}
-      <Script
-        id="jank"
-        strategy="beforeInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-           console.log('hello from script');
-           var docraptorJavaScriptFinished = function () {
-             if (window.finished) {
-               return window.finished();
-             }
-               else {
-               return false;
-             }
-           };
-          `,
-        }}
-      />
+
       <BarChart
         className="h-80"
         data={chartdata}
