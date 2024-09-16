@@ -25,6 +25,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          id="jank"
+          // strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+          console.log('hello from script');
+          var docraptorJavaScriptFinished = function () {
+            // add a button to the page
+            var button = document.createElement('button');
+            button.textContent = 'Click me';
+            button.onclick = function () {
+              console.log('button clicked');
+              };
+              document.body.appendChild(button);
+              
+              if (window.finished) {
+                return window.finished();
+                }
+                else {
+                  return false;
+              }
+              };
+              `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
